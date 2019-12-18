@@ -66,16 +66,18 @@ function uploadMultipleFiles(files) {
 multipleUploadForm.addEventListener('submit', function(event){
     var files = multipleFileUploadInput.files;
     if(files.length === 0) {
-        multipleFileUploadError.innerHTML = "Please select at least one file";
+        multipleFileUploadError.innerHTML = "Пожалуйста выберите один файл";
         multipleFileUploadError.style.display = "block";
     }
     uploadMultipleFiles(files);
     event.preventDefault();
+     multipleFileUploadError.innerHTML = "Файл успешно загружен";
+            multipleFileUploadError.style.display = "block";
     setTimeout(function () {
         if(window.location.hash != '#r') {
             window.location.hash = 'r';
             window.location.reload(1);
         }
-    }, 1000);
+    }, 2000);
 }, true);
 

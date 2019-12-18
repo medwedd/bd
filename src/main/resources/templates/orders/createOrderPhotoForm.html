@@ -8,9 +8,11 @@
   <form th:object="${order}" class="form-horizontal" id="add-client-form" method="post">
     <div>
       <label>Дата встречи</label>
+      <br>
       <input type="date" th:value="${#dates.createNow()}" name="aDate"/>
       <br>
       <label>Скидка</label>
+      <br>
       <input type="text" th:value="${#dates.createNow()}" name="discount"/>
       <br>
       <select name="photoId">
@@ -18,6 +20,7 @@
                 th:value="${photo.id}"
                 th:utext="${photo.title}"/>
       </select>
+      <br>
     </div>
     <br>
     <div>

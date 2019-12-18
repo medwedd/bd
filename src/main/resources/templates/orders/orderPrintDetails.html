@@ -45,6 +45,7 @@
       <form id="multipleUploadForm" name="multipleUploadForm">
         <input type="text" th:value="${#dates.createNow()}" name="orderId" hidden/>
         <input id="multipleFileUploadInput" type="file" name="files" class="file-input" multiple required />
+        <br>
         <button type="submit" class="primary submit-btn">Загрузить</button>
       </form>
       <div class="upload-response">
@@ -69,7 +70,8 @@
         </div>
         <div>
           <div>
-            <button class="btn btn-default" type="submit">Добавить печать</button>
+            <br>
+            <button class="btn btn-default" type="submit">Добавить фото на печать</button>
           </div>
         </div>
       </form>

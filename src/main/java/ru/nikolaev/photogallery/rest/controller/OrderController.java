@@ -176,6 +176,34 @@ public class OrderController {
 //      Collection<Order> orders = orderRepository.findAll();
 //      results.forEach(client -> client.setOrderList(orders.stream().filter(ord -> client.getId().equals(ord.getClient().getId())).collect(toList())));
       model.put("selections", results);
-      return "wer";
+      return "report1";
    }
+
+   @GetMapping("/reportOrders")
+   public String reportOrders(Map<String, Object> model) {
+      Collection<Order> results = orderDao.findAll();
+//      Collection<Order> orders = orderRepository.findAll();
+//      results.forEach(client -> client.setOrderList(orders.stream().filter(ord -> client.getId().equals(ord.getClient().getId())).collect(toList())));
+      model.put("selections", results);
+      return "report2";
+   }
+
+   @GetMapping("/reportPhoto")
+   public String reportServices(Map<String, Object> model) {
+      Collection<ServiceToPhoto> results = serviceToPhotoDao.findAll();
+//      Collection<Order> orders = orderRepository.findAll();
+//      results.forEach(client -> client.setOrderList(orders.stream().filter(ord -> client.getId().equals(ord.getClient().getId())).collect(toList())));
+      model.put("selections", results);
+      return "report3";
+   }
+
+   @GetMapping("/reportPrint")
+   public String reportPrint(Map<String, Object> model) {
+      Collection<ServiceToPrint> results = serviceToPrintDao.findAll();
+//      Collection<Order> orders = orderRepository.findAll();
+//      results.forEach(client -> client.setOrderList(orders.stream().filter(ord -> client.getId().equals(ord.getClient().getId())).collect(toList())));
+      model.put("selections", results);
+      return "report4";
+   }
+
 }

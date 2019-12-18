@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org">
+
+<body>
+<table id="clients" class="table table-striped" data-sortable>
+    <thead>
+    <tr>
+        <th style="width: 150px;">Имя</th>
+        <th style="width: 200px;">Почта</th>
+        <th style="width: 200px;">Телефон</th>
+        <th>Количество заказов</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="client : ${selections}">
+        <td th:text="${client.name}"/>
+        <td th:text="${client.email}"/>
+        <td th:text="${client.phone}"/>
+        <td th:text="${#lists.size(client.orderList)}"/>
+    </tr>
+    </tbody>
+</table>
+</body>
+
+</html>

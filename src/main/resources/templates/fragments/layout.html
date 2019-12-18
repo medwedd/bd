@@ -33,7 +33,6 @@
   <nav class="navbar navbar-default" role="navigation">
       <div class="container">
           <div class="navbar-header">
-              <a class="navbar-brand" th:href="@{/}"><span></span></a>
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
                   <span class="sr-only"><os-p>Toggle navigation</os-p></span>
                   <span class="icon-bar"></span>
@@ -51,10 +50,10 @@
                       </a>
                   </li>
 
-                  <li th:replace="::menuItem ('/','home','Главная','home','Главная')">
-                      <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                      <span>Главная</span>
-                  </li>
+                  <!--<li th:replace="::menuItem ('/','home','Главная','home','Главная')">-->
+                      <!--<span class="glyphicon glyphicon-home" aria-hidden="true"></span>-->
+                      <!--<span>Главная</span>-->
+                  <!--</li>-->
   
                   <li th:replace="::menuItem ('/clients','search','Клиенты фотоателье','search','Клиенты фотоателье')">
                       <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -72,7 +71,7 @@
                       <span>Услуги фотографа</span>
                   </li>
 
-                  <li th:replace="::menuItem ('/services/print','services','Услуги','search','Печать')">
+                  <li th:replace="::menuItem ('/services/print','services','Услуги','search','Услуги печати')">
                       <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                       <span>Услуги печати</span>
                   </li>
