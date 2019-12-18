@@ -1,0 +1,262 @@
+create SCHEMA IF NOT EXISTS photo_studio;
+         
+create table photo_studio.ContainToPhoto (
+   OrderToPhoto         Integer                  not null,
+   ServiceToPhoto       Integer                  not null
+);
+
+alter table photo_studio.ContainToPhoto
+   add constraint PK_CONTAINTOPHOTO primary key (OrderToPhoto, ServiceToPhoto);
+   
+create table photo_studio.ContainToPrint (
+   OrderToPrint         Integer                  not null,
+   ServiceToPrint       Integer                  not null
+);
+
+alter table photo_studio.ContainToPrint
+   add constraint PK_CONTAINTOPRINT primary key (OrderToPrint, ServiceToPrint);
+   
+create table photo_studio.OrderStatus (
+   ID_OrderStatus       Serial               not null,
+   Title                varchar(255)         not null,
+   Description          varchar(255)         not null
+);
+
+alter table photo_studio.OrderStatus
+   add constraint PK_ORDERSTATUS primary key (ID_OrderStatus);
+
+
+alter table photo_studio.OrderStatus
+   add constraint AK_TITLE_ORDERSTA unique (title);
+
+
+/*==============================================================*/
+/* table photo_studio.: OrderToPhoto                                          */
+/*==============================================================*/
+create table photo_studio.OrderToPhoto (
+   ID_Orders            int                  not null,
+   photographingDate    date            not null,
+   PersonCount          int                  not null default 5
+);
+
+
+alter table photo_studio.OrderToPhoto
+   add constraint PK_ORDERTOPHOTO primary key (ID_Orders);
+
+create table photo_studio.OrderToPrint (
+   ID_Orders            int                  not null,
+   ReadyDate            date             not null
+);
+
+alter table photo_studio.OrderToPrint
+   add constraint PK_ORDERTOPRINT primary key (ID_Orders);
+
+/*==============================================================*/
+/* table photo_studio.: Orders                                                */
+/*==============================================================*/
+create table photo_studio.Orders (
+   ID_Orders            Serial                  not null,
+   UserId               Integer                  not null,
+   OrderStatus          Integer                  not null,
+   CreateDate           date             not null default CURRENT_TIMESTAMP,
+   Discount             Integer                  not null default 0,
+   Immediatly           bool                  not null,
+   PhotoUrl             varchar(255)
+);
+
+
+alter table photo_studio.Orders
+   add constraint PK_ORDERS primary key (ID_Orders);
+
+
+/*==============================================================*/
+/* table photo_studio.: ServiceToPhoto                                        */
+/*==============================================================*/
+create table photo_studio.ServiceToPhoto (
+   ID_ServiceToPhoto    Serial               not null,
+   Title                varchar(255)         not null,
+   Description          varchar(255)         not null,
+   Cost                 int                  not null,
+   Durability           int                  not null
+);
+
+
+alter table photo_studio.ServiceToPhoto
+   add constraint PK_SERVICETOPHOTO primary key (ID_ServiceToPhoto);
+
+
+alter table photo_studio.ServiceToPhoto
+   add constraint AK_TITLE_SERVICEF unique (Title);
+
+/*==============================================================*/
+/* Table: ServiceToPrint                                        */
+/*==============================================================*/
+create table photo_studio.ServiceToPrint (
+   ID_ServiceToPrint    Serial               not null,
+   Title                varchar(255)         not null,
+   Description          varchar(255)         not null,
+   Cost                 int                  not null
+);
+
+alter table photo_studio.ServiceToPrint
+   add constraint PK_SERVICETOPRINT primary key (ID_ServiceToPrint);
+
+alter table photo_studio.ServiceToPrint
+   add constraint AK_TITLE_SERVICEP unique (Title);
+
+/*==============================================================*/
+/* table photo_studio.: UserRole                                              */
+/*==============================================================*/
+create table photo_studio.UserRole (
+   ID_UserRole          Serial                  not null,
+   Title                varchar(255)         not null,
+   Description          varchar(255)         not null
+);
+
+
+alter table photo_studio.UserRole
+   add constraint PK_USERROLE primary key (ID_UserRole);
+
+
+alter table photo_studio.UserRole
+   add constraint AK_TITLE_USERROLE unique (Title);
+
+
+/*==============================================================*/
+/* table photo_studio.: Users                                                 */
+/*==============================================================*/
+create table photo_studio.Users (
+   ID_Users             Serial               not null,
+   UserRole             Integer              not null,
+   Name                 varchar(255)         not null,
+   Password             varchar(255)         not null,
+   Email                varchar(255)         not null,
+   phone                varchar(50)          not null,
+   RegistrationDate     date             not null default CURRENT_TIMESTAMP
+);
+
+
+alter table photo_studio.Users
+   add constraint PK_USERS primary key (ID_Users);
+
+alter table photo_studio.Users
+   add constraint AK_NAME_USERS unique (Name);
+
+alter table photo_studio.ContainToPhoto
+   add constraint FK_CONTAINT_CONTAINTO_ORDERTOF foreign key (OrderToPhoto)
+      references photo_studio.OrderToPhoto (ID_Orders)
+         on update cascade;
+
+
+alter table photo_studio.ContainToPhoto
+   add constraint FK_CONTAINT_CONTAINTO_SERVICEF foreign key (ServiceToPhoto)
+      references photo_studio.ServiceToPhoto (ID_ServiceToPhoto)
+         on update cascade;
+
+
+alter table photo_studio.ContainToPrint
+   add constraint FK_CONTAINT_CONTAINTO_ORDERTOP foreign key (OrderToPrint)
+      references photo_studio.OrderToPrint (ID_Orders)
+         on update cascade;
+
+
+alter table photo_studio.ContainToPrint
+   add constraint FK_CONTAINT_CONTAINTO_SERVICEP foreign key (ServiceToPrint)
+      references photo_studio.ServiceToPrint (ID_ServiceToPrint)
+         on update cascade;
+
+
+alter table photo_studio.OrderToPhoto
+   add constraint FK_ORDERTOP_ORDER_ORDERS foreign key (ID_Orders)
+      references photo_studio.Orders (ID_Orders)
+         on update cascade;
+
+
+alter table photo_studio.OrderToPrint
+   add constraint FK_ORDERTOP_ORDER2_ORDERS foreign key (ID_Orders)
+      references photo_studio.Orders (ID_Orders)
+         on update cascade;
+
+
+alter table photo_studio.Orders
+   add constraint FK_ORDERS_FINTTOORD_ORDERSTA foreign key (OrderStatus)
+      references photo_studio.OrderStatus (ID_OrderStatus)
+         on update cascade;
+
+
+alter table photo_studio.Orders
+   add constraint FK_ORDERS_ORDERS_USERS foreign key (UserId)
+      references photo_studio.Users (ID_Users)
+         on update cascade;
+
+
+alter table photo_studio.Users
+   add constraint FK_USERS_HAVE_USERROLE foreign key (UserRole)
+      references photo_studio.UserRole (ID_UserRole)
+         on update cascade;
+        
+INSERT INTO photo_studio.UserRole (Title,Description) VALUES ('Студент','Студент бакалавриата');
+
+INSERT INTO photo_studio.OrderStatus (Title,Description) VALUES ('Обрабатывается','В процессе обработки');
+
+INSERT INTO photo_studio.OrderStatus (Title,Description) VALUES ('Выполнен','Уже выполнен');
+
+INSERT INTO photo_studio.Users (Name,Password,Email,UserRole,RegistrationDate, phone) 
+	VALUES ('Andrey','aaa','andrey@gmail.com',1,CURRENT_TIMESTAMP,'79111111111');
+
+INSERT INTO photo_studio.Users (Name,Password,Email,UserRole,RegistrationDate, phone) 
+	VALUES ('Nikita','aaa','nikita@gmail.com',1,CURRENT_TIMESTAMP, '79111111111');
+
+INSERT INTO photo_studio.Orders (OrderStatus,UserId,immediatly) 
+	VALUES (1,1,false);
+
+INSERT INTO photo_studio.Orders (OrderStatus,UserId,immediatly) 
+	VALUES (2,1,true);
+
+INSERT INTO photo_studio.Orders (OrderStatus,UserId,immediatly) 
+	VALUES (2,1,true);
+
+INSERT INTO photo_studio.OrderToPhoto (ID_Orders,PersonCount,photographingDate) 
+	VALUES (1, 2, CURRENT_TIMESTAMP);
+
+INSERT INTO photo_studio.OrderToPhoto (ID_Orders,PersonCount,photographingDate) 
+	VALUES (2, 3, CURRENT_TIMESTAMP);
+
+INSERT INTO photo_studio.OrderToPrint (ID_Orders,ReadyDate) 
+	VALUES (3, CURRENT_TIMESTAMP);
+
+INSERT INTO photo_studio.ServiceToPhoto (Title,Description,Cost,Durability) 
+	VALUES ('Съемка в фотостудии 1 час','Съемка просходит в нашей студии по адрессу',1000,60);
+
+INSERT INTO photo_studio.ServiceToPhoto (Title,Description,Cost,Durability) 
+	VALUES ('Съемка в фотостудии 2 часа','Съемка просходит в нашей студии по адрессу',1800,120);
+
+INSERT INTO photo_studio.ServiceToPhoto (Title,Description,Cost,Durability) 
+	VALUES ('Съемка на природе 1 час','Выезд фотографа на природу',2000,60);
+
+INSERT INTO photo_studio.ServiceToPhoto (Title,Description,Cost,Durability) 
+	VALUES ('Съемка на природе 2 часа','Выезд фотографа на природу',3500,120);
+	
+INSERT INTO photo_studio.ServiceToPrint (Title,Description,Cost) 
+	VALUES ('Печать 3х4','Печать фотографий 3х4',100);
+
+INSERT INTO photo_studio.ServiceToPrint (Title,Description,Cost) 
+	VALUES ('Печать 10х15','Печать фотографий 10х15',200);
+
+INSERT INTO photo_studio.ServiceToPrint (Title,Description,Cost) 
+	VALUES ('Печать 30х45','Печать фотографий 30х45',300);
+
+
+INSERT INTO photo_studio.ContainToPhoto (OrderToPhoto,ServiceToPhoto) 
+	VALUES (1,1);
+
+INSERT INTO photo_studio.ContainToPhoto (OrderToPhoto,ServiceToPhoto) 
+	VALUES (1,2);
+
+INSERT INTO photo_studio.ContainToPhoto (OrderToPhoto,ServiceToPhoto) 
+	VALUES (2,2);
+
+INSERT INTO photo_studio.ContainToPrint (OrderToPrint,ServiceToPrint) 
+	VALUES (3, 1);
+
+insert into ContainToPhoto (OrderToPrint, ServiceToPrint) values (1, 1);
