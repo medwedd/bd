@@ -1,0 +1,38 @@
+app.api.version: '@project.version@'
+spring.application.name: '@project.name@'
+
+server:
+  port: 8099
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=photo_studio
+    username: postgres
+    password: admin
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    properties:
+      hibernate:
+        ddl-auto: none
+        default_schema: photo_studio
+        jdbc.lob.non_contextual_creation: true
+        format_sql: true
+    show-sql: false
+  thymeleaf:
+    mode: HTML
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
+file:
+  upload-dir: files
+
+logging.level:
+  ROOT: INFO
+  com.epam.autocode: DEBUG
+  org.springframework: INFO
+
+#docker run --name some-postgres -p 5432:5432 -e POSTGRES_PASSWORD=admin -d postgres
+

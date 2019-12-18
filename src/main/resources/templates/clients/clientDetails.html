@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body},'clients')}">
+
+  <body>
+  
+  
+    <h2>Информация о клиенте</h2>
+  
+  
+    <table class="table table-striped" th:object="${selections}">
+      <tr>
+        <th>Номер</th>
+        <td><b th:text="*{id}"></b></td>
+      </tr>
+      <tr>
+        <th>Имя</th>
+        <td><b th:text="*{name}"></b></td>
+      </tr>
+      <tr>
+        <th>Почта</th>
+        <td th:text="*{email}" /></td>
+      </tr>
+      <tr>
+        <th>Телефон</th>
+        <td th:text="*{phone}" /></td>
+      </tr>
+      <tr>
+        <th>Дата первого посещения</th>
+        <td th:text="*{registrationDate}" /></td>
+      </tr>
+    </table>
+  
+    <a th:href="@{{id}/edit(id=${selections.id})}" class="btn btn-default">Редактировать информацию о клиенте</a>
+    <a th:href="@{{id}/orders/photo/new(id=${selections.id})}" class="btn btn-default">Добавить новый заказ на фотографию</a>
+    <a th:href="@{{id}/orders/print/new(id=${selections.id})}" class="btn btn-default">Добавить новый заказ на печать</a>
+
+    <br />
+    <br />
+    <br />
+    <h2>Заказы клиента</h2>
+  
+    <table class="table table-striped">
+  
+      <tr th:each="order : ${selections.orderList}">
+        <td valign="top">
+          <dl class="dl-horizontal">
+            <dt>Номер заказа заказа</dt>
+            <dd> <a th:href="@{/orders/__${order.id}__}" th:text="${order.id}"/></a></dd>
+            <dt>Статус заказа</dt>
+            <dd th:text="${order.orderStatus.title}" /></dd>
+          </dl>
+        </td>
+        <td valign="top">
+          <table class="table-condensed">
+            <tr>
+              <td><a
+                th:href="@{/orders/{orderId}(orderId=${order.id})}">Просмотреть детальную информацию</a></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+  
+    </table>
+  
+  </body>
+
+</html>

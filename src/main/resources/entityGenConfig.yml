@@ -1,0 +1,6 @@
+jdbcSettings:
+  url: jdbc:postgresql://localhost:5432/postgres?currentSchema=photo_studio
+  username: postgres
+  password: admin
+
+packageName: "ru.nikolaev.photogallery.test.model"

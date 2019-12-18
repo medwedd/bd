@@ -1,0 +1,30 @@
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body},'clients')}">
+
+<body>
+
+  <h2>Заказ на фото</h2>
+  <br>
+  <form th:object="${order}" class="form-horizontal" id="add-client-form" method="post">
+    <div>
+      <label>Дата встречи</label>
+      <input type="date" th:value="${#dates.createNow()}" name="aDate"/>
+      <br>
+      <label>Скидка</label>
+      <input type="text" th:value="${#dates.createNow()}" name="discount"/>
+      <br>
+      <select name="photoId">
+        <option th:each="photo : ${photos}"
+                th:value="${photo.id}"
+                th:utext="${photo.title}"/>
+      </select>
+    </div>
+    <br>
+    <div>
+      <div class="col-sm-offset-2 col-sm-10">
+        <button class="btn btn-default" type="submit">Добавить заказ на фотографии</button>
+      </div>
+    </div>
+  </form>
+</body>
+</html>

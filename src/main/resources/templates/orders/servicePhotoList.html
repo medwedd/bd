@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'clients')}">
+
+  <body>
+
+    <h2>Услиги фотографа</h2>
+
+    <table id="orders" class="table table-striped" data-sortable>
+        <thead>
+        <tr>
+            <th style="width: 150px;">Номер</th>
+            <th style="width: 200px;">Наименование</th>
+            <th>Описание</th>
+            <th>Стоимость</th>
+            <th>Длительность(м)</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr th:each="order : ${selections}">
+              <td th:text="${order.id}"/>
+              <td th:text="${order.title}"/>
+              <td th:text="${order.description}"/>
+              <td th:text="${order.cost}"/>
+              <td th:text="${order.durability}"/>
+          </tr>
+        </tbody>
+    </table>
+    <!--<a th:href="@{clients/new}" class="btn btn-default"></a>-->
+
+  </body>
+</html>

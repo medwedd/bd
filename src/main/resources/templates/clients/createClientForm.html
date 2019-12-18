@@ -1,0 +1,23 @@
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body},'clients')}">
+
+<body>
+
+  <h2>Клиент</h2>
+  <form th:object="${client}" class="form-horizontal" id="add-client-form" action="/clients/new" method="post">
+    <div class="form-group has-feedback">
+      <input
+        th:replace="~{fragments/inputField :: input ('Имя', 'name', 'text')}" />
+      <input
+        th:replace="~{fragments/inputField :: input ('Почта', 'email', 'text')}" />
+      <input
+              th:replace="~{fragments/inputField :: input ('Телефон', 'phone', 'text')}" />
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button class="btn btn-default" type="submit">Добавить клиента</button>
+      </div>
+    </div>
+  </form>
+</body>
+</html>

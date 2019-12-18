@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body},'clients')}">
+
+  <body>
+  
+  
+    <h2>Информация о заказе</h2>
+  
+    <table class="table table-striped" th:object="${selections}">
+      <tr>
+        <th>Номер заказа</th>
+        <td><b th:text="*{id}"></b></td>
+      </tr>
+      <tr>
+        <th>Статус заказа</th>
+        <td th:text="*{orderStatus.title}" /></td>
+      </tr>
+      <tr>
+        <th>Дата создания заказа</th>
+        <td th:text="*{creationDate}" /></td>
+      </tr>
+      tr>
+      <th>Дата встречи</th>
+        <td th:text="${info.photographingDate}" /></td>
+      </tr>
+      <tr>
+        <th>Скидка</th>
+        <td th:text="*{discount}" /></td>
+      </tr>
+      <tr>
+        <th>Тип заказа</th>
+        <td>Фотографирование</td>
+      </tr>
+      <!--<tr>-->
+        <!--<th>Услуги печати</th>-->
+        <!--<td th:text="${orderToPrint} ? 'Присутствуют' : 'Отсутствуют'" /></td>-->
+      <!--</tr>-->
+      <!--<tr>-->
+        <!--<th>Услуги фотографа</th>-->
+        <!--<td th:text="${orderToPhotos} ? 'Присутствуют' : 'Отсутствуют'" /></td>-->
+      <!--</tr>-->
+    </table>
+  
+    <!--<a th:href="@{{id}/services/photo/new(id=${selections.id})}" class="btn btn-default">Редактировать общую информацию о заказе</a>-->
+    <a th:href="@{{id}/finish(id=${selections.id})}" class="btn btn-default">Завершить заказ</a>
+    <br>
+    <div>
+
+      <br>
+      <form action="#" th:action="@{{id}/services/photo/new(id=${selections.id})}" class="form-horizontal" id="add-print-form" method="post">
+        <div>
+
+          <select name="photoId" style="margin-left-width: 213px; margin-top-width: 30px;">
+            <option th:each="photo : ${photos}"
+                    th:value="${photo.id}"
+                    th:utext="${photo.title}"/>
+          </select>
+          <!--<input type="date" id="start" name="trip-start"-->
+                 <!--value="2019-12-18"-->
+                 <!--min="2018-01-01" max="2020-12-31">-->
+        </div>
+        <br>
+        <div>
+          <div>
+            <button class="btn btn-default" type="submit">Добавить услуги фотографа</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <h2>Услуги в заказе</h2>
+  
+    <table class="table table-striped">
+  
+      <tr th:each="service : ${selections?.orderToPhotos?.serviceToPhotos}">
+      <td valign="top">
+        <dl class="dl-horizontal">
+          <dt>Наименование услуги</dt>
+          <dd th:text="${service.title}" /></dd>
+          <dt>Описание услуги</dt>
+          <dd th:text="${service.description}" /></dd>
+          <dt>Стоимость услуги</dt>
+          <dd th:text="${service.cost}" /></dd>
+          <dt>Длительность в минутах</dt>
+          <dd th:text="${service.durability}" /></dd>
+        </dl>
+      </td>
+      <td valign="top">
+        <table class="table-condensed">
+          <tr>
+            <td><a
+                    th:href="@{{clientId}/service/photo/{orderId}/remove(clientId=${selections.id},orderId=${service.id})}">Удалить услугу</a></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    </table>
+  
+  </body>
+
+</html>

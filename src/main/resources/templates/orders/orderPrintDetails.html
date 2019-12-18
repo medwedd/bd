@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body},'clients')}">
+
+  <body>
+  
+  
+    <h2>Информация о заказе</h2>
+  
+  
+    <table class="table table-striped" th:object="${selections}">
+      <tr>
+        <th>Номер заказа</th>
+        <td><b th:text="*{id}"></b></td>
+      </tr>
+      <tr>
+        <th>Статус заказа</th>
+        <td th:text="*{orderStatus.title}" /></td>
+      </tr>
+      <tr>
+        <th>Дата создания заказа</th>
+        <td th:text="*{creationDate}" /></td>
+      </tr>
+      <tr>
+        <th>Скидка</th>
+        <td th:text="*{discount}" /></td>
+      </tr>
+      <tr>
+        <th>Тип заказа</th>
+        <td>Печать</td>
+      </tr>
+      <!--<tr>-->
+        <!--<th>Услуги печати</th>-->
+        <!--<td th:text="${orderToPrint} ? 'Присутствуют' : 'Отсутствуют'" /></td>-->
+      <!--</tr>-->
+      <!--<tr>-->
+        <!--<th>Услуги фотографа</th>-->
+        <!--<td th:text="${orderToPhotos} ? 'Присутствуют' : 'Отсутствуют'" /></td>-->
+      <!--</tr>-->
+    </table>
+    <br>
+    <div class="multiple-upload">
+      <h3>Загрузить фотографию</h3>
+      <form id="multipleUploadForm" name="multipleUploadForm">
+        <input type="text" th:value="${#dates.createNow()}" name="orderId" hidden/>
+        <input id="multipleFileUploadInput" type="file" name="files" class="file-input" multiple required />
+        <button type="submit" class="primary submit-btn">Загрузить</button>
+      </form>
+      <div class="upload-response">
+        <div id="multipleFileUploadError"></div>
+        <div id="multipleFileUploadSuccess"></div>
+      </div>
+    </div>
+    <br>
+    <a th:href="${selections.photoUrl}" class="btn btn-default">Скачать фото</a>
+    <!--<a th:href="@{{id}/services/print/new(id=${selections.id})}" class="btn btn-default">Редактировать общую информацию о заказе</a>-->
+    <a th:href="@{{id}/finish(id=${selections.id})}" class="btn btn-default">Завершить заказ</a>
+    <br>
+    <div>
+      <br>
+      <form action="#" th:action="@{{id}/services/print/new(id=${selections.id})}" class="form-horizontal" id="add-print-form" method="post">
+        <div>
+          <select name="printId" style="margin-left-width: 213px; margin-top-width: 30px;">
+            <option th:each="print : ${prints}"
+                    th:value="${print.id}"
+                    th:utext="${print.title}"/>
+          </select>
+        </div>
+        <div>
+          <div>
+            <button class="btn btn-default" type="submit">Добавить печать</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <h2>Услуги в заказе</h2>
+  
+    <table class="table table-striped">
+  
+      <tr th:each="service : ${selections?.orderToPrint?.serviceToPrints}">
+        <td valign="top">
+          <dl class="dl-horizontal">
+            <dt>Наименование услуги</dt>
+            <dd th:text="${service.title}" /></dd>
+            <dt>Описание услуги</dt>
+            <dd th:text="${service.description}" /></dd>
+            <dt>Стоимость услуги</dt>
+            <dd th:text="${service.cost}" /></dd>
+          </dl>
+        </td>
+        <td valign="top">
+          <table class="table-condensed">
+            <tr>
+              <td><a
+                      th:href="@{{clientId}/service/print/{orderId}/remove(clientId=${selections.id},orderId=${service.id})}">Удалить услугу</a></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+  
+    </table>
+    <script src="/resources/js/main.js"></script>
+  </body>
+
+</html>
