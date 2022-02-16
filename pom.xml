@@ -16,7 +16,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<postgresql.version>42.1.4</postgresql.version>
+		<postgresql.version>42.3.3</postgresql.version>
 		<springfox-swagger.version>2.9.2</springfox-swagger.version>
 		<springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
 		<webjars-bootstrap.version>3.3.6</webjars-bootstrap.version>
