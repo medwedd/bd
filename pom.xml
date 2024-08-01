@@ -19,7 +19,7 @@
 		<postgresql.version>42.1.4</postgresql.version>
 		<springfox-swagger.version>2.9.2</springfox-swagger.version>
 		<springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
-		<webjars-bootstrap.version>3.3.6</webjars-bootstrap.version>
+		<webjars-bootstrap.version>3.4.1</webjars-bootstrap.version>
 		<wro4j.version>1.8.0</wro4j.version>
 	</properties>
 
@@ -36,7 +36,7 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
-			<version>3.3.7-1</version>
+			<version>3.4.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
